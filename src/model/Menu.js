@@ -27,6 +27,17 @@ class Menu {
       { name: '샴페인', price: 25000 },
     ]);
   }
+
+  findMenuByName(menuName) {
+    const allMenuItems = [
+      ...this.appetizers.items,
+      ...this.mainDishes.items,
+      ...this.desserts.items,
+      ...this.drinks.items,
+    ];
+    return allMenuItems.find((item) => item.name === menuName);
+  }
 }
+// const a = new Menu();
 
 export default Menu;
