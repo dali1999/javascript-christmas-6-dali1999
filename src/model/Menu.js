@@ -56,7 +56,23 @@ class Menu {
     }, 0);
     return this.totalPrice;
   }
+
+  // 디저트
+  dessertChecker(menuName) {
+    const dessertItems = this.desserts.items.map((item) => item.name);
+    return dessertItems.includes(menuName);
+  }
+
+  isDessertInOrder(menuArr) {
+    const hasDessert = menuArr.some(([menuName]) =>
+      this.dessertChecker(menuName),
+    );
+    return hasDessert;
+  }
+
 }
-// const a = new Menu();
+const a = new Menu();
+// a.isMainInOrder([['초코케이크', 2], ['제로콜라', 3],['해산물파스타', 3]])
+// [['초코케이크', 2], ['제로콜라', 3]]
 
 export default Menu;
