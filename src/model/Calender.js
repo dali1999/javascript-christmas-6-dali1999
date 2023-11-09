@@ -105,6 +105,14 @@ class Calender {
     }
     return null;
   }
+
+  // 증정 이벤트
+  checkGiveawayEvent() {
+    if (OutputView.giveAwayMessage === '샴페인 1개') {
+      return 25000;
+    }
+    return null;
+  }
 }
 const calender = new Calender();
 
