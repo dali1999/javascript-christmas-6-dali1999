@@ -67,6 +67,21 @@ class Calender {
     return null;
   }
 
+  // 평일 할인: -${2023 * 디저트수}원
+  checkWeekdayDiscountDay(date) {
+    this.storeWeekday();
+    if (
+      this.weekDay.includes(date) &&
+      this.menu.isDessertInOrder(OutputView.formattedMenuArr)
+    ) {
+      const dessertQuantity = this.menu.getDessertQuantityInOrder(
+        OutputView.formattedMenuArr,
+      );
+      return 2023 * dessertQuantity;
+    }
+    return null;
+  }
+
 
 }
 const calender = new Calender();
