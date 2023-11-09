@@ -46,6 +46,14 @@ class Menu {
     }
     return 0;
   }
+
+  getTotalPriceForMenu(menuArr) {
+    const totalPrice = menuArr.reduce((acc, [menuName, quantity]) => {
+      const menuPrice = this.getPriceForMenu(menuName, quantity);
+      return acc + menuPrice;
+    }, 0);
+    return totalPrice;
+  }
 }
 // const a = new Menu();
 
