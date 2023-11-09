@@ -70,6 +70,16 @@ class Menu {
     return hasDessert;
   }
 
+  // 메인
+  mainChecker(menuName) {
+    const mainItems = this.mainDishes.items.map((item) => item.name);
+    return mainItems.includes(menuName);
+  }
+
+  isMainInOrder(menuArr) {
+    const hasMain = menuArr.some(([menuName]) => this.mainChecker(menuName));
+    return hasMain;
+  }
 }
 const a = new Menu();
 // a.isMainInOrder([['초코케이크', 2], ['제로콜라', 3],['해산물파스타', 3]])
