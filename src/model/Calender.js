@@ -61,6 +61,13 @@ class Calender {
     return this.weekendDay;
   }
 
+  // 크리스마스 디데이 할인
+  checkDdayDiscountDay(date) {
+    if (date >= 1 && date <= 25) return 1000 + 100 * (date - 1);
+    return null;
+  }
+
+
 }
 const calender = new Calender();
 
