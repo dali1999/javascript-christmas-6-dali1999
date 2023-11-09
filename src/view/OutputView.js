@@ -8,6 +8,7 @@ const OutputView = {
   newMenu: new Menu(),
   calender: new Calender(),
   giveAwayMessage: null,
+  totalBenefits: 0,
 
   printOpening() {
     Console.print('안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.');
@@ -118,7 +119,7 @@ const OutputView = {
 
   printTotalBenefits() {
     Console.print('\n<총혜택 금액>');
-    const totalBenefits =
+    this.totalBenefits =
       this.calender.checkDdayDiscountDay(InputView.visitDate) +
       this.calender.checkWeekdayDiscountDay(InputView.visitDate) +
       this.calender.checkWeekendDiscountDay(InputView.visitDate) +
@@ -126,8 +127,20 @@ const OutputView = {
       this.calender.checkGiveawayEvent();
 
     const totalBenefitsMessage =
-      totalBenefits !== 0 ? `-${totalBenefits.toLocaleString()}원` : '없음';
+      this.totalBenefits !== 0
+        ? `-${this.totalBenefits.toLocaleString()}원`
+        : '없음';
     Console.print(totalBenefitsMessage);
+  },
+
+  printExpectedPayment() {
+    let expectedPayment = this.newMenu.totalPrice - this.totalBenefits;
+    const giveawayEventInfo = this.calender.checkGiveawayEvent();
+    if (giveawayEventInfo !== null) {
+      expectedPayment += giveawayEventInfo;
+      return Console.print(`${expectedPayment.toLocaleString()}원`);
+    }
+    return Console.print(`${expectedPayment.toLocaleString()}원`);
   },
 };
 
