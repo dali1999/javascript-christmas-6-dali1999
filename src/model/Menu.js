@@ -89,6 +89,15 @@ class Menu {
     const hasMain = menuArr.some(([menuName]) => this.mainChecker(menuName));
     return hasMain;
   }
+
+  getMainQuantityInOrder(menuArr) {
+    const mainQuantity = menuArr.reduce(
+      (total, [menuName, quantity]) =>
+        this.mainChecker(menuName) ? total + quantity : total,
+      0,
+    );
+    return mainQuantity;
+  }
 }
 const a = new Menu();
 // a.isMainInOrder([['초코케이크', 2], ['제로콜라', 3],['해산물파스타', 3]])
