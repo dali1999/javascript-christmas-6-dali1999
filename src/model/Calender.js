@@ -44,6 +44,22 @@ class Calender {
     return this.specialDate;
   }
 
+  storeWeekday() {
+    const december = Calender.generateDecemberCalendar(2023);
+    december.forEach((dayInfo) => {
+      if ([0, 1, 2, 3, 4].includes(dayInfo.dayOfWeek))
+        this.weekDay.push(dayInfo.day);
+    });
+    return this.weekDay;
+  }
+
+  storeWeekendday() {
+    const december = Calender.generateDecemberCalendar(2023);
+    december.forEach((dayInfo) => {
+      if ([5, 6].includes(dayInfo.dayOfWeek)) this.weekendDay.push(dayInfo.day);
+    });
+    return this.weekendDay;
+  }
 
 }
 const calender = new Calender();
