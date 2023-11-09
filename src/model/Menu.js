@@ -35,7 +35,16 @@ class Menu {
       ...this.desserts.items,
       ...this.drinks.items,
     ];
+    // Console.print(allMenuItems.some((item) => item.name === menuName));
     return allMenuItems.find((item) => item.name === menuName);
+  }
+
+  getPriceForMenu(menuName, quantity) {
+    const menuItem = this.findMenuByName(menuName);
+    if (menuItem) {
+      return menuItem.price * quantity;
+    }
+    return 0;
   }
 }
 // const a = new Menu();
