@@ -97,7 +97,14 @@ class Calender {
     return null;
   }
 
- 
+  // 특별 할인
+  checkSpecialDiscountDay(date) {
+    this.storeSpecialDate();
+    if (this.specialDate.includes(date)) {
+      return 1000;
+    }
+    return null;
+  }
 }
 const calender = new Calender();
 
