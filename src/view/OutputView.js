@@ -33,6 +33,13 @@ const OutputView = {
     // Console.print(orderMenuArr); // ['a-2', 'b-3']
     // Console.print(this.formattedMenuArr); // [ ['a', 2],['b', 3] ]
   },
+
+  printTotalPriceBeforeDiscount() {
+    Console.print('\n<할인 전 총주문 금액>');
+    // Console.print(this.formattedMenuArr.map((item) => item[1])); // [2, 3]
+    const totalPrice = this.newMenu.getTotalPriceForMenu(this.formattedMenuArr);
+    Console.print(`total: ${totalPrice}`);
+  },
 };
 
 // const m = new Menu();
