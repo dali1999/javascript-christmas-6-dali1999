@@ -82,7 +82,22 @@ class Calender {
     return null;
   }
 
+  // 주말 할인: -${2023 * 메인수}원
+  checkWeekendDiscountDay(date) {
+    this.storeWeekendday();
+    if (
+      this.weekendDay.includes(date) &&
+      this.menu.isMainInOrder(OutputView.formattedMenuArr)
+    ) {
+      const mainQuantity = this.menu.getMainQuantityInOrder(
+        OutputView.formattedMenuArr,
+      );
+      return 2023 * mainQuantity;
+    }
+    return null;
+  }
 
+ 
 }
 const calender = new Calender();
 
