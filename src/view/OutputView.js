@@ -116,7 +116,19 @@ const OutputView = {
     }
   },
 
-  
+  printTotalBenefits() {
+    Console.print('\n<총혜택 금액>');
+    const totalBenefits =
+      this.calender.checkDdayDiscountDay(InputView.visitDate) +
+      this.calender.checkWeekdayDiscountDay(InputView.visitDate) +
+      this.calender.checkWeekendDiscountDay(InputView.visitDate) +
+      this.calender.checkSpecialDiscountDay(InputView.visitDate) +
+      this.calender.checkGiveawayEvent();
+
+    const totalBenefitsMessage =
+      totalBenefits !== 0 ? `-${totalBenefits.toLocaleString()}원` : '없음';
+    Console.print(totalBenefitsMessage);
+  },
 };
 
 // const m = new Menu();
