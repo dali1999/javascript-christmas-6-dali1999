@@ -37,8 +37,17 @@ const OutputView = {
   printTotalPriceBeforeDiscount() {
     Console.print('\n<할인 전 총주문 금액>');
     // Console.print(this.formattedMenuArr.map((item) => item[1])); // [2, 3]
-    const totalPrice = this.newMenu.getTotalPriceForMenu(this.formattedMenuArr);
-    Console.print(`total: ${totalPrice}`);
+    this.newMenu.totalPrice = this.newMenu.getTotalPriceForMenu(
+      this.formattedMenuArr,
+    );
+    Console.print(`${this.newMenu.totalPrice.toLocaleString()}원`);
+  },
+
+  printGiveawayMenu() {
+    Console.print('\n<증정 메뉴>');
+    const giveAwayMessage =
+      this.newMenu.totalPrice >= 120000 ? '샴페인 1개' : '없음';
+    Console.print(giveAwayMessage);
   },
 };
 

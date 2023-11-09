@@ -26,6 +26,8 @@ class Menu {
       { name: '레드와인', price: 60000 },
       { name: '샴페인', price: 25000 },
     ]);
+
+    this.totalPrice = 0;
   }
 
   findMenuByName(menuName) {
@@ -48,11 +50,11 @@ class Menu {
   }
 
   getTotalPriceForMenu(menuArr) {
-    const totalPrice = menuArr.reduce((acc, [menuName, quantity]) => {
+    this.totalPrice = menuArr.reduce((acc, [menuName, quantity]) => {
       const menuPrice = this.getPriceForMenu(menuName, quantity);
       return acc + menuPrice;
     }, 0);
-    return totalPrice;
+    return this.totalPrice;
   }
 }
 // const a = new Menu();
