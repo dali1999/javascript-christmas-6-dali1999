@@ -1,10 +1,13 @@
 import { Console } from '@woowacourse/mission-utils';
 import InputView from './InputView.js';
 import Menu from '../model/Menu.js';
+import Calender from '../model/Calender.js';
 
 const OutputView = {
   formattedMenuArr: [],
   newMenu: new Menu(),
+  calender: new Calender(),
+  giveAwayMessage: null,
 
   printOpening() {
     Console.print('안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.');
@@ -45,10 +48,75 @@ const OutputView = {
 
   printGiveawayMenu() {
     Console.print('\n<증정 메뉴>');
-    const giveAwayMessage =
+    this.giveAwayMessage =
       this.newMenu.totalPrice >= 120000 ? '샴페인 1개' : '없음';
-    Console.print(giveAwayMessage);
+    Console.print(this.giveAwayMessage);
   },
+
+  printBenefitDetail() {
+    Console.print('\n<혜택 내역>');
+    let nullCount = 0;
+
+    // 크리스마스 디데이 할인
+    const dDayDiscountInfo = this.calender.checkDdayDiscountDay(
+      InputView.visitDate,
+    );
+    if (dDayDiscountInfo !== null) {
+      const dDayDiscountMessage = `크리스마스 디데이 할인: -${dDayDiscountInfo.toLocaleString()}원`;
+      Console.print(dDayDiscountMessage);
+    } else {
+      nullCount += 1;
+    }
+
+    // 평일 할인
+    const weekdayDiscountInfo = this.calender.checkWeekdayDiscountDay(
+      InputView.visitDate,
+    );
+    if (weekdayDiscountInfo !== null) {
+      const weekdayDiscountMessage = `평일 할인: -${weekdayDiscountInfo.toLocaleString()}원`;
+      Console.print(weekdayDiscountMessage);
+    } else {
+      nullCount += 1;
+    }
+
+    // 주말 할인
+    const weekendDiscountInfo = this.calender.checkWeekendDiscountDay(
+      InputView.visitDate,
+    );
+    if (weekendDiscountInfo !== null) {
+      const weekendDiscountMessage = `주말 할인: -${weekendDiscountInfo.toLocaleString()}원`;
+      Console.print(weekendDiscountMessage);
+    } else {
+      nullCount += 1;
+    }
+
+    // 특별 할인
+    const specialDiscountInfo = this.calender.checkSpecialDiscountDay(
+      InputView.visitDate,
+    );
+    if (specialDiscountInfo !== null) {
+      const specialDiscountMessage = `특별 할인: -${specialDiscountInfo.toLocaleString()}원`;
+      Console.print(specialDiscountMessage);
+    } else {
+      nullCount += 1;
+    }
+
+    // 증정 이벤트
+    const giveawayEventInfo = this.calender.checkGiveawayEvent();
+    if (giveawayEventInfo !== null) {
+      const giveawayEventMessage = `증정 이벤트: -${giveawayEventInfo.toLocaleString()}원`;
+      Console.print(giveawayEventMessage);
+    } else {
+      nullCount += 1;
+    }
+
+    // 혜택 없을 시
+    if (nullCount === 5) {
+      Console.print('없음');
+    }
+  },
+
+  
 };
 
 // const m = new Menu();
