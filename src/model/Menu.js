@@ -70,6 +70,15 @@ class Menu {
     return hasDessert;
   }
 
+  getDessertQuantityInOrder(menuArr) {
+    const dessertQuantity = menuArr.reduce(
+      (total, [menuName, quantity]) =>
+        this.dessertChecker(menuName) ? total + quantity : total,
+      0,
+    );
+    return dessertQuantity;
+  }
+
   // 메인
   mainChecker(menuName) {
     const mainItems = this.mainDishes.items.map((item) => item.name);
