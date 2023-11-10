@@ -134,6 +134,7 @@ const OutputView = {
   },
 
   printExpectedPayment() {
+    Console.print('\n<할인 후 예상 결제 금액>');
     let expectedPayment = this.newMenu.totalPrice - this.totalBenefits;
     const giveawayEventInfo = this.calender.checkGiveawayEvent();
     if (giveawayEventInfo !== null) {
@@ -141,6 +142,14 @@ const OutputView = {
       return Console.print(`${expectedPayment.toLocaleString()}원`);
     }
     return Console.print(`${expectedPayment.toLocaleString()}원`);
+  },
+
+  printGrantedEventBadge() {
+    Console.print('\n<12월 이벤트 배지>');
+    if (this.totalBenefits >= 20000) return Console.print('산타');
+    if (this.totalBenefits >= 10000) return Console.print('트리');
+    if (this.totalBenefits >= 5000) return Console.print('별');
+    return Console.print('없음');
   },
 };
 
