@@ -1,10 +1,12 @@
 import { Console } from '@woowacourse/mission-utils';
-import OutputView from '../view/OutputView.js';
+import InputView from '../view/InputView.js';
 import Menu from './Menu.js';
+import Order from './Order.js';
 
 class Calender {
   constructor() {
     this.menu = new Menu();
+
     this.specialDate = [];
     this.weekDay = [];
     this.weekendDay = [];
@@ -13,7 +15,6 @@ class Calender {
   static generateDecemberCalendar(year) {
     const calendar = [];
 
-    // 12월의 첫 날부터 마지막 날까지 반복
     for (let day = 1; day <= 31; day += 1) {
       const currentDate = new Date(year, 11, day);
       // 현재 날짜가 12월이 아니라면 반복 중지
@@ -66,59 +67,6 @@ class Calender {
     if (date >= 1 && date <= 25) return 1000 + 100 * (date - 1);
     return null;
   }
-
-  // 평일 할인: -${2023 * 디저트수}원
-  checkWeekdayDiscountDay(date) {
-    this.storeWeekday();
-    if (
-      this.weekDay.includes(date) &&
-      this.menu.isDessertInOrder(OutputView.formattedMenuArr)
-    ) {
-      const dessertQuantity = this.menu.getDessertQuantityInOrder(
-        OutputView.formattedMenuArr,
-      );
-      return 2023 * dessertQuantity;
-    }
-    return null;
-  }
-
-  // 주말 할인: -${2023 * 메인수}원
-  checkWeekendDiscountDay(date) {
-    this.storeWeekendday();
-    if (
-      this.weekendDay.includes(date) &&
-      this.menu.isMainInOrder(OutputView.formattedMenuArr)
-    ) {
-      const mainQuantity = this.menu.getMainQuantityInOrder(
-        OutputView.formattedMenuArr,
-      );
-      return 2023 * mainQuantity;
-    }
-    return null;
-  }
-
-  // 특별 할인
-  checkSpecialDiscountDay(date) {
-    this.storeSpecialDate();
-    if (this.specialDate.includes(date)) {
-      return 1000;
-    }
-    return null;
-  }
-
-  // 증정 이벤트
-  checkGiveawayEvent() {
-    if (OutputView.giveAwayMessage === '샴페인 1개') {
-      return 25000;
-    }
-    return null;
-  }
 }
-const calender = new Calender();
-
-// const december = Calender.generateDecemberCalendar(2023);
-// Console.print(calender.storeSpecialDate());
-// Console.print(calender.storeWeekday());
-// Console.print(calender.storeWeekendday());
 
 export default Calender;

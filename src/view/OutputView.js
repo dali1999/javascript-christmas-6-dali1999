@@ -2,13 +2,15 @@ import { Console } from '@woowacourse/mission-utils';
 import InputView from './InputView.js';
 import Menu from '../model/Menu.js';
 import Calender from '../model/Calender.js';
+import Order from '../model/Order.js';
+import Event from '../model/Event.js';
 
 const OutputView = {
-  formattedMenuArr: [],
-  newMenu: new Menu(),
-  calender: new Calender(),
-  giveAwayMessage: null,
+  menu: new Menu(),
+  order: new Order(),
+  event: new Event(),
   totalBenefits: 0,
+  nullCount: 0,
 
   printOpening() {
     Console.print('안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.');
@@ -23,96 +25,94 @@ const OutputView = {
 
   printOrderMenu() {
     Console.print('<주문 메뉴>');
-    const orderMenuArr = InputView.orderMenu.split(',');
-    this.formattedMenuArr = orderMenuArr.map((item) => {
-      const [menu, num] = item.split('-');
-
-      if (!this.newMenu.findMenuByName(menu.trim())) {
-        throw new Error('[ERROR] 메뉴에 없습니다');
-      }
-
-      Console.print(`${menu.trim()} ${num.trim()}개`);
-      return [menu.trim(), parseInt(num.trim(), 10)];
+    this.order.formatOrder();
+    this.order.formattedOrderArr.forEach((item) => {
+      Console.print(`${item[0]} ${item[1]}개`);
     });
-    // Console.print(orderMenuArr); // ['a-2', 'b-3']
-    // Console.print(this.formattedMenuArr); // [ ['a', 2],['b', 3] ]
   },
 
   printTotalPriceBeforeDiscount() {
     Console.print('\n<할인 전 총주문 금액>');
-    // Console.print(this.formattedMenuArr.map((item) => item[1])); // [2, 3]
-    this.newMenu.totalPrice = this.newMenu.getTotalPriceForMenu(
-      this.formattedMenuArr,
+    this.menu.totalPrice = this.menu.getTotalPriceForMenu(
+      this.order.formattedOrderArr,
     );
-    Console.print(`${this.newMenu.totalPrice.toLocaleString()}원`);
+    Console.print(`${this.menu.totalPrice.toLocaleString()}원`);
   },
 
   printGiveawayMenu() {
     Console.print('\n<증정 메뉴>');
-    this.giveAwayMessage =
-      this.newMenu.totalPrice >= 120000 ? '샴페인 1개' : '없음';
-    Console.print(this.giveAwayMessage);
+    const giveAwayMessage = this.menu.giveAwayMenuInfo()
+      ? '샴페인 1개'
+      : '없음';
+    Console.print(giveAwayMessage);
+  },
+
+  printDiscountMessage(message, info) {
+    if (info !== null) {
+      const discountMessage = `${message}: -${info.toLocaleString()}원`;
+      Console.print(discountMessage);
+      return true;
+    }
+    return false;
+  },
+
+  printDdayDiscount() {
+    const dDayDiscountInfo = this.event.checkDdayDiscountDay(
+      InputView.visitDate,
+    );
+    if (
+      !this.printDiscountMessage('크리스마스 디데이 할인', dDayDiscountInfo)
+    ) {
+      this.nullCount += 1;
+    }
+  },
+
+  printWeekDayDiscount() {
+    const weekdayDiscountInfo = this.event.checkWeekdayDiscountDay(
+      InputView.visitDate,
+      this.order.formattedOrderArr,
+    );
+    if (!this.printDiscountMessage('평일 할인', weekdayDiscountInfo)) {
+      this.nullCount += 1;
+    }
+  },
+
+  printWeekendDiscount() {
+    const weekendDiscountInfo = this.event.checkWeekendDiscountDay(
+      InputView.visitDate,
+      this.order.formattedOrderArr,
+    );
+    if (!this.printDiscountMessage('주말 할인', weekendDiscountInfo)) {
+      this.nullCount += 1;
+    }
+  },
+
+  printSpecialDiscount() {
+    const specialDiscountInfo = this.event.checkSpecialDiscountDay(
+      InputView.visitDate,
+    );
+    if (!this.printDiscountMessage('특별 할인', specialDiscountInfo)) {
+      this.nullCount += 1;
+    }
+  },
+
+  printGiveawayEvent() {
+    const giveAwayEventInfo = this.event.checkGiveAwayEvent(
+      this.menu.giveAwayMenuInfo(),
+    );
+    if (!this.printDiscountMessage('증정 이벤트', giveAwayEventInfo)) {
+      this.nullCount += 1;
+    }
   },
 
   printBenefitDetail() {
     Console.print('\n<혜택 내역>');
-    let nullCount = 0;
-
-    // 크리스마스 디데이 할인
-    const dDayDiscountInfo = this.calender.checkDdayDiscountDay(
-      InputView.visitDate,
-    );
-    if (dDayDiscountInfo !== null) {
-      const dDayDiscountMessage = `크리스마스 디데이 할인: -${dDayDiscountInfo.toLocaleString()}원`;
-      Console.print(dDayDiscountMessage);
-    } else {
-      nullCount += 1;
-    }
-
-    // 평일 할인
-    const weekdayDiscountInfo = this.calender.checkWeekdayDiscountDay(
-      InputView.visitDate,
-    );
-    if (weekdayDiscountInfo !== null) {
-      const weekdayDiscountMessage = `평일 할인: -${weekdayDiscountInfo.toLocaleString()}원`;
-      Console.print(weekdayDiscountMessage);
-    } else {
-      nullCount += 1;
-    }
-
-    // 주말 할인
-    const weekendDiscountInfo = this.calender.checkWeekendDiscountDay(
-      InputView.visitDate,
-    );
-    if (weekendDiscountInfo !== null) {
-      const weekendDiscountMessage = `주말 할인: -${weekendDiscountInfo.toLocaleString()}원`;
-      Console.print(weekendDiscountMessage);
-    } else {
-      nullCount += 1;
-    }
-
-    // 특별 할인
-    const specialDiscountInfo = this.calender.checkSpecialDiscountDay(
-      InputView.visitDate,
-    );
-    if (specialDiscountInfo !== null) {
-      const specialDiscountMessage = `특별 할인: -${specialDiscountInfo.toLocaleString()}원`;
-      Console.print(specialDiscountMessage);
-    } else {
-      nullCount += 1;
-    }
-
-    // 증정 이벤트
-    const giveawayEventInfo = this.calender.checkGiveawayEvent();
-    if (giveawayEventInfo !== null) {
-      const giveawayEventMessage = `증정 이벤트: -${giveawayEventInfo.toLocaleString()}원`;
-      Console.print(giveawayEventMessage);
-    } else {
-      nullCount += 1;
-    }
-
-    // 혜택 없을 시
-    if (nullCount === 5) {
+    this.printDdayDiscount();
+    this.printWeekDayDiscount();
+    this.printWeekendDiscount();
+    this.printSpecialDiscount();
+    this.printGiveawayEvent();
+    if (this.nullCount === 5) {
       Console.print('없음');
     }
   },
@@ -120,11 +120,17 @@ const OutputView = {
   printTotalBenefits() {
     Console.print('\n<총혜택 금액>');
     this.totalBenefits =
-      this.calender.checkDdayDiscountDay(InputView.visitDate) +
-      this.calender.checkWeekdayDiscountDay(InputView.visitDate) +
-      this.calender.checkWeekendDiscountDay(InputView.visitDate) +
-      this.calender.checkSpecialDiscountDay(InputView.visitDate) +
-      this.calender.checkGiveawayEvent();
+      this.event.checkDdayDiscountDay(InputView.visitDate) +
+      this.event.checkWeekdayDiscountDay(
+        InputView.visitDate,
+        this.order.formattedOrderArr,
+      ) +
+      this.event.checkWeekendDiscountDay(
+        InputView.visitDate,
+        this.order.formattedOrderArr,
+      ) +
+      this.event.checkSpecialDiscountDay(InputView.visitDate) +
+      this.event.checkGiveAwayEvent(this.menu.giveAwayMenuInfo());
 
     const totalBenefitsMessage =
       this.totalBenefits !== 0
@@ -135,10 +141,12 @@ const OutputView = {
 
   printExpectedPayment() {
     Console.print('\n<할인 후 예상 결제 금액>');
-    let expectedPayment = this.newMenu.totalPrice - this.totalBenefits;
-    const giveawayEventInfo = this.calender.checkGiveawayEvent();
-    if (giveawayEventInfo !== null) {
-      expectedPayment += giveawayEventInfo;
+    let expectedPayment = this.menu.totalPrice - this.totalBenefits;
+    const giveAwayEventInfo = this.event.checkGiveAwayEvent(
+      this.menu.giveAwayMenuInfo(),
+    );
+    if (this.menu.giveAwayMenuInfo()) {
+      expectedPayment += giveAwayEventInfo;
       return Console.print(`${expectedPayment.toLocaleString()}원`);
     }
     return Console.print(`${expectedPayment.toLocaleString()}원`);

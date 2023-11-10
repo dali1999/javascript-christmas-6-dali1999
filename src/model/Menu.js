@@ -37,7 +37,6 @@ class Menu {
       ...this.desserts.items,
       ...this.drinks.items,
     ];
-    // Console.print(allMenuItems.some((item) => item.name === menuName));
     return allMenuItems.find((item) => item.name === menuName);
   }
 
@@ -55,6 +54,11 @@ class Menu {
       return acc + menuPrice;
     }, 0);
     return this.totalPrice;
+  }
+
+  giveAwayMenuInfo() {
+    if (this.totalPrice >= 120000) return true;
+    return false;
   }
 
   // 디저트
