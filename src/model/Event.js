@@ -1,4 +1,3 @@
-import { Console } from '@woowacourse/mission-utils';
 import Calender from './Calender.js';
 import Menu from './Menu.js';
 
@@ -9,7 +8,7 @@ class Event {
   }
 
   // 크리스마스 디데이 할인
-  checkDdayDiscountDay(date) {
+  static checkDdayDiscountDay(date) {
     if (date >= 1 && date <= 25) return 1000 + 100 * (date - 1);
     return null;
   }
@@ -48,7 +47,7 @@ class Event {
   }
 
   // 증정 이벤트
-  checkGiveAwayEvent(isGiveAway) {
+  static checkGiveAwayEvent(isGiveAway) {
     if (isGiveAway) return 25000;
     return null;
   }

@@ -1,7 +1,7 @@
-import { Console } from '@woowacourse/mission-utils';
 import MenuCategory from './MenuCategory.js';
 
 class Menu {
+  // eslint-disable-next-line max-lines-per-function
   constructor() {
     this.appetizers = new MenuCategory('애피타이저', [
       { name: '양송이수프', price: 6000 },
@@ -103,8 +103,5 @@ class Menu {
     return mainQuantity;
   }
 }
-const a = new Menu();
-// a.isMainInOrder([['초코케이크', 2], ['제로콜라', 3],['해산물파스타', 3]])
-// [['초코케이크', 2], ['제로콜라', 3]]
 
 export default Menu;

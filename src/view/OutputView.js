@@ -1,7 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
 import InputView from './InputView.js';
 import Menu from '../model/Menu.js';
-import Calender from '../model/Calender.js';
 import Order from '../model/Order.js';
 import Event from '../model/Event.js';
 
@@ -57,9 +56,7 @@ const OutputView = {
   },
 
   printDdayDiscount() {
-    const dDayDiscountInfo = this.event.checkDdayDiscountDay(
-      InputView.visitDate,
-    );
+    const dDayDiscountInfo = Event.checkDdayDiscountDay(InputView.visitDate);
     if (
       !this.printDiscountMessage('크리스마스 디데이 할인', dDayDiscountInfo)
     ) {
@@ -97,7 +94,7 @@ const OutputView = {
   },
 
   printGiveawayEvent() {
-    const giveAwayEventInfo = this.event.checkGiveAwayEvent(
+    const giveAwayEventInfo = Event.checkGiveAwayEvent(
       this.menu.giveAwayMenuInfo(),
     );
     if (!this.printDiscountMessage('증정 이벤트', giveAwayEventInfo)) {
@@ -113,14 +110,15 @@ const OutputView = {
     this.printSpecialDiscount();
     this.printGiveawayEvent();
     if (this.nullCount === 5) {
-      Console.print('없음');
+      return Console.print('없음');
     }
+    return true;
   },
 
   printTotalBenefits() {
     Console.print('\n<총혜택 금액>');
     this.totalBenefits =
-      this.event.checkDdayDiscountDay(InputView.visitDate) +
+      Event.checkDdayDiscountDay(InputView.visitDate) +
       this.event.checkWeekdayDiscountDay(
         InputView.visitDate,
         this.order.formattedOrderArr,
@@ -130,7 +128,7 @@ const OutputView = {
         this.order.formattedOrderArr,
       ) +
       this.event.checkSpecialDiscountDay(InputView.visitDate) +
-      this.event.checkGiveAwayEvent(this.menu.giveAwayMenuInfo());
+      Event.checkGiveAwayEvent(this.menu.giveAwayMenuInfo());
 
     const totalBenefitsMessage =
       this.totalBenefits !== 0
@@ -142,7 +140,7 @@ const OutputView = {
   printExpectedPayment() {
     Console.print('\n<할인 후 예상 결제 금액>');
     let expectedPayment = this.menu.totalPrice - this.totalBenefits;
-    const giveAwayEventInfo = this.event.checkGiveAwayEvent(
+    const giveAwayEventInfo = Event.checkGiveAwayEvent(
       this.menu.giveAwayMenuInfo(),
     );
     if (this.menu.giveAwayMenuInfo()) {

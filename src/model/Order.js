@@ -1,10 +1,8 @@
-import { Console } from '@woowacourse/mission-utils';
 import InputView from '../view/InputView.js';
 import Menu from './Menu.js';
 
 class Order {
   constructor() {
-    // this.order = 0;
     this.formattedOrderArr = [];
     this.menu = new Menu();
   }
