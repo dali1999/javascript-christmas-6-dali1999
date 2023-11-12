@@ -17,6 +17,21 @@ const Exception = {
       throw new Error(ErrorMessage.INVALID_DATE);
     }
   },
+
+  // 메뉴판에 없는 메뉴 입력 시
+  isOrderInMenu(order) {
+    const orderArr = order.split(',');
+    const formattedOrderArr = orderArr.map((item) => {
+      const [menu, num] = item.split('-');
+      return [menu.trim(), parseInt(num.trim(), 10)];
+    });
+    const allItemsInMenu = formattedOrderArr.every(([menuItem]) =>
+      this.menu.isItemInMenu(menuItem),
+    );
+    if (!allItemsInMenu) {
+      throw new Error(ErrorMessage.INVALID_ORDER);
+    }
+  },
 };
 
 export default Exception;
