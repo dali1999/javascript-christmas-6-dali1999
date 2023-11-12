@@ -32,6 +32,23 @@ const Exception = {
       throw new Error(ErrorMessage.INVALID_ORDER);
     }
   },
+
+  // 메뉴 개수가 1 이상이 아닐 시
+  isMorethanOneMenu(order) {
+    const orderArr = order.split(',');
+    const orderQuantityArr = orderArr.map((item) => {
+      const [, num] = item.split('-');
+      return parseInt(num.trim(), 10);
+    });
+
+    const totalQuantity = orderQuantityArr.reduce(
+      (total, current) => total + current,
+      0,
+    );
+    if (totalQuantity === 0) {
+      throw new Error(ErrorMessage.INVALID_ORDER);
+    }
+  },
 };
 
 export default Exception;
