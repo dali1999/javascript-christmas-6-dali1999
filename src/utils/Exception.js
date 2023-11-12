@@ -62,6 +62,20 @@ const Exception = {
       throw new Error(ErrorMessage.INVALID_ORDER);
     }
   },
+
+  // 중복 메뉴 입력 시
+  isDuplicate(order) {
+    const orderArr = order.split(',');
+    const orderMenuArr = orderArr.map((item) => {
+      const [menu] = item.split('-');
+      return menu.trim();
+    });
+    const set = new Set(orderMenuArr);
+    if (orderMenuArr.length !== set.size) {
+      throw new Error(ErrorMessage.INVALID_ORDER);
+    }
+  },
+  // 메뉴 형식이 예시와 다를 시
 };
 
 export default Exception;
