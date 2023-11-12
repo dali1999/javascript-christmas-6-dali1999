@@ -5,6 +5,13 @@ const Validator = {
     Exception.isNumber(date);
     Exception.isValidRange(date);
   },
+
+  validateOrder(order) {
+    Exception.isOrderInMenu(order);
+    Exception.isMorethanOneMenu(order);
+    Exception.isOrderQuantityNumber(order);
+    Exception.isDuplicate(order);
+  },
 };
 
 export default Validator;
