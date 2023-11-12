@@ -1,19 +1,44 @@
 import { Console } from '@woowacourse/mission-utils';
+import Validator from '../utils/Validator.js';
+import PromptMessage from '../constant/PromptMessage.js';
 
 const InputView = {
   visitDate: 0,
   orderMenu: [],
 
+  async getReInput(promptMessage, validationFunction) {
+    let validInput = false;
+    let userInput;
+
+    while (!validInput) {
+      userInput = await Console.readLineAsync(promptMessage);
+      try {
+        validInput = validationFunction(userInput);
+      } catch (error) {
+        Console.print(`${error.message}\n`);
+      }
+    }
+    return userInput;
+  },
+
   async readVisitDate() {
-    this.visitDate = await Console.readLineAsync(
-      '12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)\n',
+    this.visitDate = await InputView.getReInput(
+      PromptMessage.ENTER_VISIT_DATE,
+      (input) => {
+        Validator.validateVisitDate(input);
+        return true;
+      },
     );
     this.visitDate = parseInt(this.visitDate, 10);
   },
 
   async readOrderMenu() {
-    this.orderMenu = await Console.readLineAsync(
-      '주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)\n',
+    this.orderMenu = await InputView.getReInput(
+      PromptMessage.ENTER_ORDER,
+      (input) => {
+        Validator.validateOrder(input);
+        return true;
+      },
     );
   },
 };
