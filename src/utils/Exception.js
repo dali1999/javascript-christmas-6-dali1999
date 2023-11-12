@@ -49,6 +49,19 @@ const Exception = {
       throw new Error(ErrorMessage.INVALID_ORDER);
     }
   },
+
+  // 메뉴 개수가 숫자가 아니게 입력했을 시
+  isOrderQuantityNumber(order) {
+    const orderArr = order.split(',');
+    const orderQuantityArr = orderArr.map((item) => {
+      const [, num] = item.split('-');
+      return parseInt(num.trim(), 10);
+    });
+    const hasNaN = orderQuantityArr.some((item) => Number.isNaN(item));
+    if (hasNaN) {
+      throw new Error(ErrorMessage.INVALID_ORDER);
+    }
+  },
 };
 
 export default Exception;
