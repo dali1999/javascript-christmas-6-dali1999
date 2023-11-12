@@ -61,6 +61,18 @@ class Menu {
     return false;
   }
 
+  // 에피타이저
+  appetizerChecker(menuName) {
+    const appetizerItems = this.appetizers.items.map((item) => item.name);
+    return appetizerItems.includes(menuName);
+  }
+
+  // 음료
+  drinkChecker(menuName) {
+    const drinkItems = this.drinks.items.map((item) => item.name);
+    return drinkItems.includes(menuName);
+  }
+
   // 디저트
   dessertChecker(menuName) {
     const dessertItems = this.desserts.items.map((item) => item.name);
@@ -101,6 +113,13 @@ class Menu {
       0,
     );
     return mainQuantity;
+  }
+
+  isItemInMenu(menuName) {
+    if (this.dessertChecker(menuName)) return true;
+    if (this.mainChecker(menuName)) return true;
+    const allItems = [...this.appetizers.items, ...this.drinks.items];
+    return allItems.some((item) => item.name === menuName);
   }
 }
 
