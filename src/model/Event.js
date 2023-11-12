@@ -51,6 +51,16 @@ class Event {
     if (isGiveAway) return 25000;
     return null;
   }
+
+  // 총 혜택
+  totalBenefitsFromEvents(date, orderMenu, giveAwayInfo) {
+    this.totalBenefits =
+      Event.checkDdayDiscountDay(date) +
+      this.checkWeekdayDiscountDay(date, orderMenu) +
+      this.checkWeekendDiscountDay(date, orderMenu) +
+      this.checkSpecialDiscountDay(date) +
+      Event.checkGiveAwayEvent(giveAwayInfo);
+  }
 }
 const a = new Event();
 a.checkWeekdayDiscountDay();
