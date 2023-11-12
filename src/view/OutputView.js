@@ -24,8 +24,7 @@ const OutputView = {
 
   printOrderMenu() {
     Console.print('<주문 메뉴>');
-    this.order.formatOrder();
-    this.order.formattedOrderArr.forEach((item) => {
+    this.order.formatOrder().forEach((item) => {
       Console.print(`${item[0]} ${item[1]}개`);
     });
   },
@@ -103,10 +102,8 @@ const OutputView = {
     ];
     const hasDiscounts = discountMessages.some((message) => message !== null);
     if (!hasDiscounts) {
-      //   Console.print(allNull);
       Console.print('없음');
     }
-    // return Console.print(allNull);
   },
 
   printTotalBenefits() {
@@ -141,6 +138,4 @@ const OutputView = {
   },
 };
 
-// const m = new Menu();
-// Console.print(m.);
 export default OutputView;

@@ -9,7 +9,7 @@ class Calender {
     this.weekendDay = [];
   }
 
-  static generateDecemberCalendar(year) {
+  static #generateDecemberCalendar(year) {
     const calendar = [];
     for (let day = 1; day <= 31; day += 1) {
       const currentDate = new Date(year, 11, day);
@@ -23,7 +23,7 @@ class Calender {
   }
 
   storeSpecialDate() {
-    const december = Calender.generateDecemberCalendar(2023);
+    const december = Calender.#generateDecemberCalendar(2023);
     december.forEach((dayInfo) => {
       if (dayInfo.specialEvent) this.specialDate.push(dayInfo.day);
     });
@@ -31,7 +31,7 @@ class Calender {
   }
 
   storeWeekday() {
-    const december = Calender.generateDecemberCalendar(2023);
+    const december = Calender.#generateDecemberCalendar(2023);
     december.forEach((dayInfo) => {
       if ([0, 1, 2, 3, 4].includes(dayInfo.dayOfWeek))
         this.weekDay.push(dayInfo.day);
@@ -40,7 +40,7 @@ class Calender {
   }
 
   storeWeekendday() {
-    const december = Calender.generateDecemberCalendar(2023);
+    const december = Calender.#generateDecemberCalendar(2023);
     december.forEach((dayInfo) => {
       if ([5, 6].includes(dayInfo.dayOfWeek)) this.weekendDay.push(dayInfo.day);
     });

@@ -3,8 +3,8 @@ import Menu from './Menu.js';
 
 class Order {
   constructor() {
-    this.formattedOrderArr = [];
     this.menu = new Menu();
+    this.formattedOrderArr = [];
   }
 
   formatOrder() {
