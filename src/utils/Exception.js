@@ -83,6 +83,19 @@ const Exception = {
       throw new Error(ErrorMessage.INVALID_ORDER);
     }
   },
+
+  // 메뉴는 최대 20개까지 주문 가능
+  isValidOrderQuantity(order) {
+    const orderArr = order.split(',');
+    const orderMenuArr = orderArr.map((item) => {
+      const [, num] = item.split('-');
+      return parseInt(num, 10); // parseInt(num, 10)
+    });
+    const totalOrderQuantity = orderMenuArr.reduce((acc, current) => acc + current, 0);
+    if (totalOrderQuantity > 20) {
+      throw new Error(ErrorMessage.INVALID_ORDER);
+    }
+  },
 };
 // Exception.isValidOrderQuantity('티본스테이크-7,바비큐립-5,초코케이크-6,제로콜라-4');
 // 티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1
