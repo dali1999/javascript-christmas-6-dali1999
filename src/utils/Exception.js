@@ -70,6 +70,19 @@ const Exception = {
       throw new Error(ErrorMessage.INVALID_ORDER);
     }
   },
+
+  // 음료만 주문 시
+  isOnlyDrinkInOrder(order) {
+    const orderArr = order.split(',');
+    const orderMenuArr = orderArr.map((item) => {
+      const [menu] = item.split('-');
+      return menu;
+    });
+    const orderWithoutDrink = orderMenuArr.filter((item) => !this.menu.drinkChecker(item));
+    if (orderWithoutDrink.length === 0) {
+      throw new Error(ErrorMessage.INVALID_ORDER);
+    }
+  },
 };
 // Exception.isValidOrderQuantity('티본스테이크-7,바비큐립-5,초코케이크-6,제로콜라-4');
 // 티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1
