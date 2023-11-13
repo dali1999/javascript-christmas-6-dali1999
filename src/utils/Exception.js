@@ -1,3 +1,4 @@
+import { Console } from '@woowacourse/mission-utils';
 import Menu from '../model/Menu.js';
 import ErrorMessage from '../constant/ErrorMessage.js';
 
@@ -23,29 +24,23 @@ const Exception = {
     const orderArr = order.split(',');
     const formattedOrderArr = orderArr.map((item) => {
       const [menu, num] = item.split('-');
-      return [menu.trim(), parseInt(num.trim(), 10)];
+      return [menu, parseInt(num, 10)];
     });
-    const allItemsInMenu = formattedOrderArr.every(([menuItem]) =>
-      this.menu.isItemInMenu(menuItem),
-    );
+    const allItemsInMenu = formattedOrderArr.every(([menuItem]) => this.menu.isItemInMenu(menuItem));
     if (!allItemsInMenu) {
       throw new Error(ErrorMessage.INVALID_ORDER);
     }
   },
 
-  // 메뉴 개수가 1 이상이 아닐 시
+  // 각 메뉴 개수가 1 이상이 아닐 시
   isMorethanOneMenu(order) {
     const orderArr = order.split(',');
     const orderQuantityArr = orderArr.map((item) => {
       const [, num] = item.split('-');
-      return parseInt(num.trim(), 10);
+      return parseInt(num, 10);
     });
-
-    const totalQuantity = orderQuantityArr.reduce(
-      (total, current) => total + current,
-      0,
-    );
-    if (totalQuantity === 0) {
+    const hasZeroOrders = orderQuantityArr.includes(0);
+    if (hasZeroOrders) {
       throw new Error(ErrorMessage.INVALID_ORDER);
     }
   },
@@ -55,7 +50,7 @@ const Exception = {
     const orderArr = order.split(',');
     const orderQuantityArr = orderArr.map((item) => {
       const [, num] = item.split('-');
-      return parseInt(num.trim(), 10);
+      return parseInt(num, 10);
     });
     const hasNaN = orderQuantityArr.some((item) => Number.isNaN(item));
     if (hasNaN) {
@@ -68,14 +63,14 @@ const Exception = {
     const orderArr = order.split(',');
     const orderMenuArr = orderArr.map((item) => {
       const [menu] = item.split('-');
-      return menu.trim();
+      return menu;
     });
     const set = new Set(orderMenuArr);
     if (orderMenuArr.length !== set.size) {
       throw new Error(ErrorMessage.INVALID_ORDER);
     }
   },
-  // 메뉴 형식이 예시와 다를 시
 };
-
+// Exception.isValidOrderQuantity('티본스테이크-7,바비큐립-5,초코케이크-6,제로콜라-4');
+// 티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1
 export default Exception;
