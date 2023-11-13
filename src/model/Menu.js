@@ -61,12 +61,6 @@ class Menu {
     return false;
   }
 
-  // 에피타이저
-  appetizerChecker(menuName) {
-    const appetizerItems = this.appetizers.items.map((item) => item.name);
-    return appetizerItems.includes(menuName);
-  }
-
   // 음료
   drinkChecker(menuName) {
     const drinkItems = this.drinks.items.map((item) => item.name);

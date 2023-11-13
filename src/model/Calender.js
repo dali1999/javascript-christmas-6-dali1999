@@ -1,10 +1,8 @@
-import Menu from './Menu.js';
+import { Console } from '@woowacourse/mission-utils';
 import CalenderConstants from '../constant/CalenderConstants.js';
 
 class Calender {
   constructor() {
-    this.menu = new Menu();
-
     this.specialDate = [];
     this.weekDay = [];
     this.weekendDay = [];
@@ -30,6 +28,7 @@ class Calender {
     december.forEach((dayInfo) => {
       if (dayInfo.specialEvent) this.specialDate.push(dayInfo.day);
     });
+    Console.print(this.specialDate);
     return this.specialDate;
   }
 
@@ -45,6 +44,7 @@ class Calender {
     december.forEach((dayInfo) => {
       if (weekdays.includes(dayInfo.dayOfWeek)) this.weekDay.push(dayInfo.day);
     });
+    Console.print(this.weekDay);
     return this.weekDay;
   }
 
@@ -54,8 +54,13 @@ class Calender {
     december.forEach((dayInfo) => {
       if (weekends.includes(dayInfo.dayOfWeek)) this.weekendDay.push(dayInfo.day);
     });
+    Console.print(this.weekendDay);
     return this.weekendDay;
   }
 }
+const a = new Calender();
+a.storeSpecialDate();
+a.storeWeekday();
+a.storeWeekendday();
 
 export default Calender;
