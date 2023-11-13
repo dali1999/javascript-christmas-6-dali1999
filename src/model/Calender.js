@@ -1,4 +1,5 @@
 import Menu from './Menu.js';
+import CalenderConstants from '../constant/CalenderConstants.js';
 
 class Calender {
   constructor() {
@@ -11,11 +12,18 @@ class Calender {
 
   static #generateDecemberCalendar(year) {
     const calendar = [];
-    for (let day = 1; day <= 31; day += 1) {
-      const currentDate = new Date(year, 11, day);
-      const dayInfo = { day, dayOfWeek: currentDate.getDay() }; // 0:일 1:월 2:화 3:수 4:목 5:금 6:토
-      if (day === 25 || dayInfo.dayOfWeek === 0) {
-        dayInfo.specialEvent = 'star';
+    for (
+      let day = CalenderConstants.FIRST_DAY_OF_MONTH;
+      day <= CalenderConstants.LAST_DAY_OF_MONTH;
+      day += 1
+    ) {
+      const currentDate = new Date(year, CalenderConstants.DECEMBER_INDEX, day);
+      const dayInfo = { day, dayOfWeek: currentDate.getDay() };
+      if (
+        day === CalenderConstants.CHRISTMAS_DAY ||
+        dayInfo.dayOfWeek === CalenderConstants.DAYS.SUN
+      ) {
+        dayInfo.specialEvent = CalenderConstants.SPECIALEVENT_MARKER;
       }
       calendar.push(dayInfo);
     }
@@ -32,17 +40,25 @@ class Calender {
 
   storeWeekday() {
     const december = Calender.#generateDecemberCalendar(2023);
+    const weekdays = [
+      CalenderConstants.DAYS.SUN,
+      CalenderConstants.DAYS.MON,
+      CalenderConstants.DAYS.TUE,
+      CalenderConstants.DAYS.WED,
+      CalenderConstants.DAYS.THU,
+    ];
     december.forEach((dayInfo) => {
-      if ([0, 1, 2, 3, 4].includes(dayInfo.dayOfWeek))
-        this.weekDay.push(dayInfo.day);
+      if (weekdays.includes(dayInfo.dayOfWeek)) this.weekDay.push(dayInfo.day);
     });
     return this.weekDay;
   }
 
   storeWeekendday() {
     const december = Calender.#generateDecemberCalendar(2023);
+    const weekends = [CalenderConstants.DAYS.FRI, CalenderConstants.DAYS.SAT];
     december.forEach((dayInfo) => {
-      if ([5, 6].includes(dayInfo.dayOfWeek)) this.weekendDay.push(dayInfo.day);
+      if (weekends.includes(dayInfo.dayOfWeek))
+        this.weekendDay.push(dayInfo.day);
     });
     return this.weekendDay;
   }
