@@ -1,3 +1,4 @@
+import { Console } from '@woowacourse/mission-utils';
 import MenuCategory from './MenuCategory.js';
 
 class Menu {

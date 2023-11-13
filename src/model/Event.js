@@ -54,6 +54,7 @@ class Event {
       this.checkWeekendDiscountDay(date, orderMenu) +
       this.checkSpecialDiscountDay(date) +
       Event.checkGiveAwayEvent(giveAwayInfo);
+    return this.totalBenefits;
   }
 }
 const a = new Event();
