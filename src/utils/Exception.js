@@ -1,4 +1,3 @@
-import { Console } from '@woowacourse/mission-utils';
 import Menu from '../model/Menu.js';
 import ErrorMessage from '../constant/ErrorMessage.js';
 
