@@ -22,24 +22,18 @@ const InputView = {
   },
 
   async readVisitDate() {
-    this.visitDate = await InputView.getReInput(
-      PromptMessage.ENTER_VISIT_DATE,
-      (input) => {
-        Validator.validateVisitDate(input);
-        return true;
-      },
-    );
+    this.visitDate = await InputView.getReInput(PromptMessage.ENTER_VISIT_DATE, (input) => {
+      Validator.validateVisitDate(input);
+      return true;
+    });
     this.visitDate = parseInt(this.visitDate, 10);
   },
 
   async readOrderMenu() {
-    this.orderMenu = await InputView.getReInput(
-      PromptMessage.ENTER_ORDER,
-      (input) => {
-        Validator.validateOrder(input);
-        return true;
-      },
-    );
+    this.orderMenu = await InputView.getReInput(PromptMessage.ENTER_ORDER, (input) => {
+      Validator.validateOrder(input);
+      return true;
+    });
   },
 };
 

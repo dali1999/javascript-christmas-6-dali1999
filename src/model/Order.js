@@ -11,7 +11,7 @@ class Order {
     const orderArr = InputView.orderMenu.split(',');
     this.formattedOrderArr = orderArr.map((item) => {
       const [menu, num] = item.split('-');
-      return [menu.trim(), parseInt(num.trim(), 10)];
+      return [menu, parseInt(num, 10)];
     });
     return this.formattedOrderArr;
   }

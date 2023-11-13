@@ -80,16 +80,13 @@ class Menu {
   }
 
   isDessertInOrder(menuArr) {
-    const hasDessert = menuArr.some(([menuName]) =>
-      this.dessertChecker(menuName),
-    );
+    const hasDessert = menuArr.some(([menuName]) => this.dessertChecker(menuName));
     return hasDessert;
   }
 
   getDessertQuantityInOrder(menuArr) {
     const dessertQuantity = menuArr.reduce(
-      (total, [menuName, quantity]) =>
-        this.dessertChecker(menuName) ? total + quantity : total,
+      (total, [menuName, quantity]) => (this.dessertChecker(menuName) ? total + quantity : total),
       0,
     );
     return dessertQuantity;
@@ -108,8 +105,7 @@ class Menu {
 
   getMainQuantityInOrder(menuArr) {
     const mainQuantity = menuArr.reduce(
-      (total, [menuName, quantity]) =>
-        this.mainChecker(menuName) ? total + quantity : total,
+      (total, [menuName, quantity]) => (this.mainChecker(menuName) ? total + quantity : total),
       0,
     );
     return mainQuantity;

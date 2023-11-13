@@ -11,19 +11,14 @@ class Calender {
   }
 
   static #generateDecemberCalendar(year) {
+    const { FIRST_DAY_OF_MONTH, LAST_DAY_OF_MONTH, DECEMBER_INDEX, CHRISTMAS_DAY, DAYS, SPECIALEVENT_MARKER } =
+      CalenderConstants;
     const calendar = [];
-    for (
-      let day = CalenderConstants.FIRST_DAY_OF_MONTH;
-      day <= CalenderConstants.LAST_DAY_OF_MONTH;
-      day += 1
-    ) {
-      const currentDate = new Date(year, CalenderConstants.DECEMBER_INDEX, day);
+    for (let day = FIRST_DAY_OF_MONTH; day <= LAST_DAY_OF_MONTH; day += 1) {
+      const currentDate = new Date(year, DECEMBER_INDEX, day);
       const dayInfo = { day, dayOfWeek: currentDate.getDay() };
-      if (
-        day === CalenderConstants.CHRISTMAS_DAY ||
-        dayInfo.dayOfWeek === CalenderConstants.DAYS.SUN
-      ) {
-        dayInfo.specialEvent = CalenderConstants.SPECIALEVENT_MARKER;
+      if (day === CHRISTMAS_DAY || dayInfo.dayOfWeek === DAYS.SUN) {
+        dayInfo.specialEvent = SPECIALEVENT_MARKER;
       }
       calendar.push(dayInfo);
     }
@@ -57,8 +52,7 @@ class Calender {
     const december = Calender.#generateDecemberCalendar(2023);
     const weekends = [CalenderConstants.DAYS.FRI, CalenderConstants.DAYS.SAT];
     december.forEach((dayInfo) => {
-      if (weekends.includes(dayInfo.dayOfWeek))
-        this.weekendDay.push(dayInfo.day);
+      if (weekends.includes(dayInfo.dayOfWeek)) this.weekendDay.push(dayInfo.day);
     });
     return this.weekendDay;
   }

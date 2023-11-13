@@ -16,10 +16,7 @@ class Event {
   // 평일 할인: -${2023 * 디저트수}원
   checkWeekdayDiscountDay(date, orderMenu) {
     this.calender.storeWeekday();
-    if (
-      this.calender.weekDay.includes(date) &&
-      this.menu.isDessertInOrder(orderMenu)
-    ) {
+    if (this.calender.weekDay.includes(date) && this.menu.isDessertInOrder(orderMenu)) {
       const dessertQuantity = this.menu.getDessertQuantityInOrder(orderMenu);
       return 2023 * dessertQuantity;
     }
@@ -29,10 +26,7 @@ class Event {
   // 주말 할인: -${2023 * 메인수}원
   checkWeekendDiscountDay(date, orderMenu) {
     this.calender.storeWeekendday();
-    if (
-      this.calender.weekendDay.includes(date) &&
-      this.menu.isMainInOrder(orderMenu)
-    ) {
+    if (this.calender.weekendDay.includes(date) && this.menu.isMainInOrder(orderMenu)) {
       const mainQuantity = this.menu.getMainQuantityInOrder(orderMenu);
       return 2023 * mainQuantity;
     }

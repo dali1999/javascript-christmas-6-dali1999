@@ -11,6 +11,9 @@ const Validator = {
     Exception.isMorethanOneMenu(order);
     Exception.isOrderQuantityNumber(order);
     Exception.isDuplicate(order);
+    Exception.isOnlyDrinkInOrder(order);
+    Exception.isValidOrderQuantity(order);
+    Exception.isValidOrderFormat(order);
   },
 };
 
