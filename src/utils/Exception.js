@@ -96,6 +96,14 @@ const Exception = {
       throw new Error(ErrorMessage.INVALID_ORDER);
     }
   },
+
+  // 메뉴 형식이 예시와 다를 시
+  isValidOrderFormat(order) {
+    const regex = /^([\p{L}\s]+-\d+)(,([\p{L}\s]+-\d+))*$/u;
+    if (!regex.test(order)) {
+      throw new Error(ErrorMessage.INVALID_ORDER);
+    }
+  },
 };
 // Exception.isValidOrderQuantity('티본스테이크-7,바비큐립-5,초코케이크-6,제로콜라-4');
 // 티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1
