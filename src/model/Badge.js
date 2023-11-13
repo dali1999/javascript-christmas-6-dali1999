@@ -1,8 +1,10 @@
+import BadgeConstants from '../constant/BadgeConstants.js';
+
 class Badge {
   static grantingEventBadge(benefit) {
-    if (benefit >= 20000) return '산타';
-    if (benefit >= 10000) return '트리';
-    if (benefit >= 5000) return '별';
+    if (benefit >= BadgeConstants.SANTA_BENEFIT) return '산타';
+    if (benefit >= BadgeConstants.TREE_BENEFIT) return '트리';
+    if (benefit >= BadgeConstants.STAR_BENEFIT) return '별';
     return null;
   }
 }
