@@ -1,8 +1,8 @@
 import Event from './Event.js';
 
 class Payment {
-  static expectedPayment(price, benefits, giveAwayInfo) {
-    let expectedPayment = price - benefits;
+  static expectedPayment(totalPrice, benefits, giveAwayInfo) {
+    let expectedPayment = totalPrice - benefits;
     const giveAwayEventInfo = Event.checkGiveAwayEvent(giveAwayInfo);
     if (giveAwayInfo) {
       expectedPayment += giveAwayEventInfo;
