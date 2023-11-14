@@ -1,14 +1,12 @@
 import { Console } from '@woowacourse/mission-utils';
 import PromptMessage from '../constant/PromptMessage.js';
 import Menu from '../model/Menu.js';
-import Order from '../model/Order.js';
 import Event from '../model/Event.js';
 import Payment from '../model/Payment.js';
 import Badge from '../model/Badge.js';
 
 const OutputView = {
   menu: new Menu(),
-  order: new Order(),
   event: new Event(),
   payment: new Payment(),
 
@@ -34,89 +32,91 @@ const OutputView = {
     Console.print(`${totalPrice.toLocaleString()}원`);
   },
 
-  printGiveawayMenu(totalPrice) {
-    Console.print(PromptMessage.GIVEAWAY_MENU_TITLE);
+  // printGiveAwayMenu(giveAwayInfo) {
+  //   Console.print(PromptMessage.GIVEAWAY_MENU_TITLE);
 
-    const giveAwayMessage = this.menu.giveAwayMenuInfo(totalPrice) ? PromptMessage.GIVEAWAY_MESSAGE : PromptMessage.NULL_MESSAGE;
-    Console.print(giveAwayMessage);
-  },
+  //   const giveAwayMessage = giveAwayInfo
+  //     ? PromptMessage.GIVEAWAY_MESSAGE
+  //     : PromptMessage.NULL_MESSAGE;
+  //   Console.print(giveAwayMessage);
+  // },
 
-  printDiscountMessage(message, info) {
-    if (info !== null) {
-      const discountMessage = `${message}: -${info.toLocaleString()}원`;
-      return Console.print(discountMessage);
-    }
-    return null;
-  },
+  // printDiscountMessage(message, info) {
+  //   if (info !== null) {
+  //     const discountMessage = `${message}: -${info.toLocaleString()}원`;
+  //     return Console.print(discountMessage);
+  //   }
+  //   return null;
+  // },
 
-  printDdayDiscount(visitDate) {
-    const dDayDiscountInfo = Event.checkDdayDiscountDay(visitDate);
-    return this.printDiscountMessage(PromptMessage.DDAY_DISCOUNT, dDayDiscountInfo);
-  },
+  // printDdayDiscount(totalPrice, visitDate) {
+  //   const dDayDiscountInfo = Event.checkDdayDiscountDay(totalPrice, visitDate);
+  //   return this.printDiscountMessage(PromptMessage.DDAY_DISCOUNT, dDayDiscountInfo);
+  // },
 
-  printWeekDayDiscount(visitDate, order) {
-    const weekdayDiscountInfo = this.event.checkWeekdayDiscountDay(visitDate, order);
-    return this.printDiscountMessage(PromptMessage.WEEKDAY_DISCOUNT, weekdayDiscountInfo);
-  },
+  // printWeekDayDiscount(totalPrice, visitDate, order) {
+  //   const weekdayDiscountInfo = this.event.checkWeekdayDiscountDay(totalPrice, visitDate, order);
+  //   return this.printDiscountMessage(PromptMessage.WEEKDAY_DISCOUNT, weekdayDiscountInfo);
+  // },
 
-  printWeekendDiscount(visitDate, order) {
-    const weekendDiscountInfo = this.event.checkWeekendDiscountDay(visitDate, order);
-    return this.printDiscountMessage(PromptMessage.WEEKEND_DISCOUNT, weekendDiscountInfo);
-  },
+  // printWeekendDiscount(totalPrice, visitDate, order) {
+  //   const weekendDiscountInfo = this.event.checkWeekendDiscountDay(totalPrice, visitDate, order);
+  //   return this.printDiscountMessage(PromptMessage.WEEKEND_DISCOUNT, weekendDiscountInfo);
+  // },
 
-  printSpecialDiscount(visitDate) {
-    const specialDiscountInfo = this.event.checkSpecialDiscountDay(visitDate);
-    return this.printDiscountMessage(PromptMessage.SPECIAL_DISCOUNT, specialDiscountInfo);
-  },
+  // printSpecialDiscount(totalPrice, visitDate) {
+  //   const specialDiscountInfo = this.event.checkSpecialDiscountDay(totalPrice, visitDate);
+  //   return this.printDiscountMessage(PromptMessage.SPECIAL_DISCOUNT, specialDiscountInfo);
+  // },
 
-  printGiveawayEvent() {
-    const giveAwayEventInfo = Event.checkGiveAwayEvent(this.menu.giveAwayMenuInfo());
-    return this.printDiscountMessage(PromptMessage.GIVEAWAY_EVENT_DISCOUNT, giveAwayEventInfo);
-  },
+  // printGiveawayEvent(giveAwayInfo) {
+  //   const giveAwayEventInfo = Event.checkGiveAwayEvent(giveAwayInfo);
+  //   return this.printDiscountMessage(PromptMessage.GIVEAWAY_EVENT_DISCOUNT, giveAwayEventInfo);
+  // },
 
-  printBenefitDetail(visitDate, order) {
-    Console.print(PromptMessage.BENEFIT_DETAIL_TITLE);
+  // printBenefitDetail(totalPrice, visitDate, order, giveAwayInfo) {
+  //   Console.print(PromptMessage.BENEFIT_DETAIL_TITLE);
 
-    const discountMessages = [
-      this.printDdayDiscount(visitDate),
-      this.printWeekDayDiscount(visitDate, order),
-      this.printWeekendDiscount(visitDate, order),
-      this.printSpecialDiscount(visitDate),
-      this.printGiveawayEvent(),
-    ];
-    const hasDiscounts = discountMessages.some((message) => message !== null);
-    if (!hasDiscounts) {
-      Console.print(PromptMessage.NULL_MESSAGE);
-    }
-  },
+  //   const discountMessages = [
+  //     this.printDdayDiscount(totalPrice, visitDate),
+  //     this.printWeekDayDiscount(totalPrice, visitDate, order),
+  //     this.printWeekendDiscount(totalPrice, visitDate, order),
+  //     this.printSpecialDiscount(totalPrice, visitDate),
+  //     this.printGiveawayEvent(giveAwayInfo),
+  //   ];
+  //   const hasDiscounts = discountMessages.some((message) => message !== null);
+  //   if (!hasDiscounts) {
+  //     Console.print(PromptMessage.NULL_MESSAGE);
+  //   }
+  // },
 
-  printTotalBenefits(visitDate, order, totalPrice) {
-    Console.print(PromptMessage.TOTAL_BENEFIT_TITLE);
+  // printTotalBenefits(visitDate, order, totalPrice, giveAwayInfo) {
+  //   Console.print(PromptMessage.TOTAL_BENEFIT_TITLE);
 
-    this.event.totalBenefitsFromEvents(visitDate, order, this.menu.giveAwayMenuInfo(totalPrice));
-    const totalBenefitsMessage =
-      this.event.totalBenefits !== 0 ? `-${this.event.totalBenefits.toLocaleString()}원` : PromptMessage.NULL_MESSAGE;
-    Console.print(totalBenefitsMessage);
-  },
+  //   this.event.totalBenefitsFromEvents(totalPrice, visitDate, order, giveAwayInfo);
+  //   const totalBenefitsMessage =
+  //     this.event.totalBenefits !== 0 ? `-${this.event.totalBenefits.toLocaleString()}원` : PromptMessage.NULL_MESSAGE;
+  //   Console.print(totalBenefitsMessage);
+  // },
 
-  printExpectedPayment(totalPrice) {
-    Console.print(PromptMessage.EXPECTED_PAYMENT_TITLE);
+  // printExpectedPayment(totalPrice, giveAwayInfo) {
+  //   Console.print(PromptMessage.EXPECTED_PAYMENT_TITLE);
 
-    const expectedPayment = Payment.expectedPayment(
-      totalPrice,
-      this.event.totalBenefits,
-      this.menu.giveAwayMenuInfo(totalPrice),
-    );
-    Console.print(`${expectedPayment.toLocaleString()}원`);
-  },
+  //   const expectedPayment = Payment.expectedPayment(
+  //     totalPrice,
+  //     this.event.totalBenefits,
+  //     giveAwayInfo,
+  //   );
+  //   Console.print(`${expectedPayment.toLocaleString()}원`);
+  // },
 
-  printGrantedEventBadge() {
-    Console.print(PromptMessage.GRANTED_BADGE_TITLE);
+  // printGrantedEventBadge() {
+  //   Console.print(PromptMessage.GRANTED_BADGE_TITLE);
 
-    const grantedBadge = Badge.grantingEventBadge(this.event.totalBenefits);
-    if (grantedBadge !== null) return Console.print(grantedBadge);
-    return Console.print(PromptMessage.NULL_MESSAGE);
-  },
+  //   const grantedBadge = Badge.grantingEventBadge(this.event.totalBenefits);
+  //   if (grantedBadge !== null) return Console.print(grantedBadge);
+  //   return Console.print(PromptMessage.NULL_MESSAGE);
+  // },
 };
 
 export default OutputView;

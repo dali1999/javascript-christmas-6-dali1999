@@ -9,7 +9,9 @@ class App {
 
   async run() {
     await this.controller.startPlannerAndGetInput();
-    this.controller.plannerDetails();
+    this.controller.setDatas();
+    this.controller.orderDetails();
+    this.controller.benefitsDetails();
   }
 }
 

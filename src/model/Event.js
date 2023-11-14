@@ -9,21 +9,24 @@ class Event {
   }
 
   static isOrderPriceMeetsCondition(totalPrice) {
-    Console.print(totalPrice);
     if (totalPrice >= 10000) return true;
     return false;
   }
 
   // 크리스마스 디데이 할인
-  static checkDdayDiscountDay(date) {
-    if (date >= 1 && date <= 25) return 1000 + 100 * (date - 1);
-        return null;
+  static checkDdayDiscountDay(totalPrice, date) {
+    if (Event.isOrderPriceMeetsCondition(totalPrice) && date >= 1 && date <= 25) return 1000 + 100 * (date - 1);
+    return null;
   }
 
   // 평일 할인: -${2023 * 디저트수}원
-  checkWeekdayDiscountDay(date, orderMenu) {
+  checkWeekdayDiscountDay(totalPrice, date, orderMenu) {
     this.calender.storeWeekday();
-    if (this.calender.weekDay.includes(date) && this.menu.isDessertInOrder(orderMenu)) {
+    if (
+      Event.isOrderPriceMeetsCondition(totalPrice) &&
+      this.calender.weekDay.includes(date) &&
+      this.menu.isDessertInOrder(orderMenu)
+    ) {
       const dessertQuantity = this.menu.getDessertQuantityInOrder(orderMenu);
       return 2023 * dessertQuantity;
     }
@@ -31,9 +34,13 @@ class Event {
   }
 
   // 주말 할인: -${2023 * 메인수}원
-  checkWeekendDiscountDay(date, orderMenu) {
+  checkWeekendDiscountDay(totalPrice, date, orderMenu) {
     this.calender.storeWeekendday();
-    if (this.calender.weekendDay.includes(date) && this.menu.isMainInOrder(orderMenu)) {
+    if (
+      Event.isOrderPriceMeetsCondition(totalPrice) &&
+      this.calender.weekendDay.includes(date) &&
+      this.menu.isMainInOrder(orderMenu)
+    ) {
       const mainQuantity = this.menu.getMainQuantityInOrder(orderMenu);
       return 2023 * mainQuantity;
     }
@@ -41,9 +48,9 @@ class Event {
   }
 
   // 특별 할인
-  checkSpecialDiscountDay(date) {
+  checkSpecialDiscountDay(totalPrice, date) {
     this.calender.storeSpecialDate();
-    if (this.calender.specialDate.includes(date)) return 1000;
+    if (Event.isOrderPriceMeetsCondition(totalPrice) && this.calender.specialDate.includes(date)) return 1000;
     return null;
   }
 
@@ -54,12 +61,12 @@ class Event {
   }
 
   // 총 혜택
-  totalBenefitsFromEvents(date, orderMenu, giveAwayInfo) {
+  totalBenefitsFromEvents(totalPrice, date, orderMenu, giveAwayInfo) {
     this.totalBenefits =
-      Event.checkDdayDiscountDay(date) +
-      this.checkWeekdayDiscountDay(date, orderMenu) +
-      this.checkWeekendDiscountDay(date, orderMenu) +
-      this.checkSpecialDiscountDay(date) +
+      Event.checkDdayDiscountDay(totalPrice, date) +
+      this.checkWeekdayDiscountDay(totalPrice, date, orderMenu) +
+      this.checkWeekendDiscountDay(totalPrice, date, orderMenu) +
+      this.checkSpecialDiscountDay(totalPrice, date) +
       Event.checkGiveAwayEvent(giveAwayInfo);
     return this.totalBenefits;
   }

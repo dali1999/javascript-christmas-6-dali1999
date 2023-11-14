@@ -40,23 +40,7 @@ class Menu {
     return allMenuItems.find((item) => item.name === menuName);
   }
 
-  // getPriceForMenu(menuName, quantity) {
-  //   const menuItem = this.findMenuByName(menuName);
-  //   if (menuItem) {
-  //     return menuItem.price * quantity;
-  //   }
-  //   return 0;
-  // }
-
-  // getTotalPriceForMenu(menuArr) {
-  //   this.totalPrice = menuArr.reduce((acc, [menuName, quantity]) => {
-  //     const menuPrice = this.getPriceForMenu(menuName, quantity);
-  //     return acc + menuPrice;
-  //   }, 0);
-  //   return this.totalPrice;
-  // }
-
-  giveAwayMenuInfo(totalPrice) {
+  static giveAwayMenuInfo(totalPrice) {
     if (totalPrice >= 120000) return true;
     return false;
   }

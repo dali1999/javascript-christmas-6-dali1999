@@ -22,7 +22,6 @@ describe('Event 테스트', () => {
   });
 
   test('giveAwayMenuInfo', async () => {
-    const menu = new Menu();
     let output;
     let totalPriceForMenu;
     // given
@@ -31,7 +30,7 @@ describe('Event 테스트', () => {
 
     // then
     totalPrices.forEach((value, index) => {
-      expect(menu.giveAwayMenuInfo(value)).toEqual(outputs[index]);
+      expect(Menu.giveAwayMenuInfo(value)).toEqual(outputs[index]);
     });
   });
 

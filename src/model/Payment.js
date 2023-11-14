@@ -4,8 +4,8 @@ import Menu from './Menu.js';
 class Payment {
   constructor() {
     this.menu = new Menu();
-
   }
+
 
   getPriceForMenu(menuName, quantity) {
     const menuItem = this.menu.findMenuByName(menuName);
