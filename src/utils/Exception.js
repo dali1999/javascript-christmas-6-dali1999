@@ -1,4 +1,5 @@
 import Menu from '../model/Menu.js';
+import Order from '../model/Order.js';
 import ErrorMessage from '../constant/ErrorMessage.js';
 
 const Exception = {
@@ -20,11 +21,7 @@ const Exception = {
 
   // 메뉴판에 없는 메뉴 입력 시
   isOrderInMenu(order) {
-    const orderArr = order.split(',');
-    const formattedOrderArr = orderArr.map((item) => {
-      const [menu, num] = item.split('-');
-      return [menu, parseInt(num, 10)];
-    });
+    const formattedOrderArr = Order.formatOrder(order);
     const allItemsInMenu = formattedOrderArr.every(([menuItem]) => this.menu.isItemInMenu(menuItem));
     if (!allItemsInMenu) {
       throw new Error(ErrorMessage.INVALID_ORDER);
@@ -33,11 +30,7 @@ const Exception = {
 
   // 각 메뉴 개수가 1 이상이 아닐 시
   isMorethanOneMenu(order) {
-    const orderArr = order.split(',');
-    const orderQuantityArr = orderArr.map((item) => {
-      const [, num] = item.split('-');
-      return parseInt(num, 10);
-    });
+    const orderQuantityArr = Order.formarOrderQuantity(order);
     const hasZeroOrders = orderQuantityArr.includes(0);
     if (hasZeroOrders) {
       throw new Error(ErrorMessage.INVALID_ORDER);
@@ -46,11 +39,7 @@ const Exception = {
 
   // 메뉴 개수가 숫자가 아니게 입력했을 시
   isOrderQuantityNumber(order) {
-    const orderArr = order.split(',');
-    const orderQuantityArr = orderArr.map((item) => {
-      const [, num] = item.split('-');
-      return parseInt(num, 10);
-    });
+    const orderQuantityArr = Order.formarOrderQuantity(order);
     const hasNaN = orderQuantityArr.some((item) => Number.isNaN(item));
     if (hasNaN) {
       throw new Error(ErrorMessage.INVALID_ORDER);
@@ -59,11 +48,7 @@ const Exception = {
 
   // 중복 메뉴 입력 시
   isDuplicate(order) {
-    const orderArr = order.split(',');
-    const orderMenuArr = orderArr.map((item) => {
-      const [menu] = item.split('-');
-      return menu;
-    });
+    const orderMenuArr = Order.formarOrderMenu(order);
     const set = new Set(orderMenuArr);
     if (orderMenuArr.length !== set.size) {
       throw new Error(ErrorMessage.INVALID_ORDER);
@@ -72,11 +57,7 @@ const Exception = {
 
   // 음료만 주문 시
   isOnlyDrinkInOrder(order) {
-    const orderArr = order.split(',');
-    const orderMenuArr = orderArr.map((item) => {
-      const [menu] = item.split('-');
-      return menu;
-    });
+    const orderMenuArr = Order.formarOrderMenu(order);
     const orderWithoutDrink = orderMenuArr.filter((item) => !this.menu.drinkChecker(item));
     if (orderWithoutDrink.length === 0) {
       throw new Error(ErrorMessage.INVALID_ORDER);
@@ -85,11 +66,7 @@ const Exception = {
 
   // 메뉴는 최대 20개까지 주문 가능
   isValidOrderQuantity(order) {
-    const orderArr = order.split(',');
-    const orderMenuArr = orderArr.map((item) => {
-      const [, num] = item.split('-');
-      return parseInt(num, 10); // parseInt(num, 10)
-    });
+    const orderMenuArr = Order.formarOrderQuantity(order);
     const totalOrderQuantity = orderMenuArr.reduce((acc, current) => acc + current, 0);
     if (totalOrderQuantity > 20) {
       throw new Error(ErrorMessage.INVALID_ORDER);

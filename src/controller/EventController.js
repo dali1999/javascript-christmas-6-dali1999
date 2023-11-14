@@ -1,4 +1,3 @@
-import { Console } from '@woowacourse/mission-utils';
 import InputView from '../view/InputView.js';
 import OutputView from '../view/OutputView.js';
 import Order from '../model/Order.js';
@@ -14,9 +13,7 @@ class EventController {
     OutputView.printPlannerOpening();
     this.visitDate = await InputView.readVisitDate();
     this.orderInput = await InputView.readOrderMenu();
-
     this.formattedOrderArr = Order.formatOrder(this.orderInput);
-    Console.print(this.formattedOrderArr);
   }
 
   static plannerDetails() {
