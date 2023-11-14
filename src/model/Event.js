@@ -8,10 +8,16 @@ class Event {
     this.menu = new Menu();
   }
 
+  static isOrderPriceMeetsCondition(totalPrice) {
+    Console.print(totalPrice);
+    if (totalPrice >= 10000) return true;
+    return false;
+  }
+
   // 크리스마스 디데이 할인
   static checkDdayDiscountDay(date) {
     if (date >= 1 && date <= 25) return 1000 + 100 * (date - 1);
-    return null;
+        return null;
   }
 
   // 평일 할인: -${2023 * 디저트수}원

@@ -1,4 +1,3 @@
-import { Console } from '@woowacourse/mission-utils';
 import MenuCategory from './MenuCategory.js';
 
 class Menu {
@@ -28,7 +27,7 @@ class Menu {
       { name: '샴페인', price: 25000 },
     ]);
 
-    this.totalPrice = 0;
+    // this.totalPrice = 0;
   }
 
   findMenuByName(menuName) {
@@ -41,24 +40,24 @@ class Menu {
     return allMenuItems.find((item) => item.name === menuName);
   }
 
-  getPriceForMenu(menuName, quantity) {
-    const menuItem = this.findMenuByName(menuName);
-    if (menuItem) {
-      return menuItem.price * quantity;
-    }
-    return 0;
-  }
+  // getPriceForMenu(menuName, quantity) {
+  //   const menuItem = this.findMenuByName(menuName);
+  //   if (menuItem) {
+  //     return menuItem.price * quantity;
+  //   }
+  //   return 0;
+  // }
 
-  getTotalPriceForMenu(menuArr) {
-    this.totalPrice = menuArr.reduce((acc, [menuName, quantity]) => {
-      const menuPrice = this.getPriceForMenu(menuName, quantity);
-      return acc + menuPrice;
-    }, 0);
-    return this.totalPrice;
-  }
+  // getTotalPriceForMenu(menuArr) {
+  //   this.totalPrice = menuArr.reduce((acc, [menuName, quantity]) => {
+  //     const menuPrice = this.getPriceForMenu(menuName, quantity);
+  //     return acc + menuPrice;
+  //   }, 0);
+  //   return this.totalPrice;
+  // }
 
-  giveAwayMenuInfo() {
-    if (this.totalPrice >= 120000) return true;
+  giveAwayMenuInfo(totalPrice) {
+    if (totalPrice >= 120000) return true;
     return false;
   }
 

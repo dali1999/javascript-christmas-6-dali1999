@@ -21,61 +21,18 @@ describe('Event 테스트', () => {
     });
   });
 
-  test('getPriceForMenu', async () => {
-    // given
-    const menuNames = ['양송이수프', '바비큐립', '아이스크림', '샴페인'];
-    const quantities = [1, 2, 3, 1];
-    const outputs = [6000, 108000, 15000, 25000];
-
-    // when
-    const menu = new Menu();
-    const priceForMenu = menuNames.map((menuName, index) => menu.getPriceForMenu(menuName, quantities[index]));
-
-    // then
-    expect(priceForMenu).toEqual(outputs);
-  });
-
-  test('getTotalPriceForMenu', async () => {
-    // given
-    const menuArr = [
-      ['티본스테이크', 1],
-      ['바비큐립', 1],
-      ['초코케이크', 2],
-      ['제로콜라', 1],
-    ];
-    const output = 142000;
-
-    // when
-    const menu = new Menu();
-    const totalPriceForMenu = menu.getTotalPriceForMenu(menuArr);
-
-    // then
-    expect(totalPriceForMenu).toEqual(output);
-  });
-
   test('giveAwayMenuInfo', async () => {
     const menu = new Menu();
     let output;
     let totalPriceForMenu;
     // given
-    menu.totalPrice = 120000;
-    output = true;
-
-    // when
-    totalPriceForMenu = menu.giveAwayMenuInfo();
+    const totalPrices = [120000, 9000];
+    const outputs = [true, false];
 
     // then
-    expect(totalPriceForMenu).toEqual(output);
-
-    // given
-    menu.totalPrice = 90000;
-    output = false;
-
-    // when
-    totalPriceForMenu = menu.giveAwayMenuInfo();
-
-    // then
-    expect(totalPriceForMenu).toEqual(output);
+    totalPrices.forEach((value, index) => {
+      expect(menu.giveAwayMenuInfo(value)).toEqual(outputs[index]);
+    });
   });
 
   test('drinkChecker', async () => {

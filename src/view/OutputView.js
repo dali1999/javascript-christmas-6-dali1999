@@ -10,6 +10,7 @@ const OutputView = {
   menu: new Menu(),
   order: new Order(),
   event: new Event(),
+  payment: new Payment(),
 
   printPlannerOpening() {
     Console.print(PromptMessage.PLANNER_OPENING);
@@ -27,17 +28,16 @@ const OutputView = {
     });
   },
 
-  printTotalPriceBeforeDiscount(order) {
+  printTotalPriceBeforeDiscount(totalPrice) {
     Console.print(PromptMessage.TOTAL_BEFORE_DISCOUNT_TITLE);
 
-    this.menu.totalPrice = this.menu.getTotalPriceForMenu(order);
-    Console.print(`${this.menu.totalPrice.toLocaleString()}원`);
+    Console.print(`${totalPrice.toLocaleString()}원`);
   },
 
-  printGiveawayMenu() {
+  printGiveawayMenu(totalPrice) {
     Console.print(PromptMessage.GIVEAWAY_MENU_TITLE);
 
-    const giveAwayMessage = this.menu.giveAwayMenuInfo() ? PromptMessage.GIVEAWAY_MESSAGE : PromptMessage.NULL_MESSAGE;
+    const giveAwayMessage = this.menu.giveAwayMenuInfo(totalPrice) ? PromptMessage.GIVEAWAY_MESSAGE : PromptMessage.NULL_MESSAGE;
     Console.print(giveAwayMessage);
   },
 
@@ -90,22 +90,22 @@ const OutputView = {
     }
   },
 
-  printTotalBenefits(visitDate, order) {
+  printTotalBenefits(visitDate, order, totalPrice) {
     Console.print(PromptMessage.TOTAL_BENEFIT_TITLE);
 
-    this.event.totalBenefitsFromEvents(visitDate, order, this.menu.giveAwayMenuInfo());
+    this.event.totalBenefitsFromEvents(visitDate, order, this.menu.giveAwayMenuInfo(totalPrice));
     const totalBenefitsMessage =
       this.event.totalBenefits !== 0 ? `-${this.event.totalBenefits.toLocaleString()}원` : PromptMessage.NULL_MESSAGE;
     Console.print(totalBenefitsMessage);
   },
 
-  printExpectedPayment() {
+  printExpectedPayment(totalPrice) {
     Console.print(PromptMessage.EXPECTED_PAYMENT_TITLE);
 
     const expectedPayment = Payment.expectedPayment(
-      this.menu.totalPrice,
+      totalPrice,
       this.event.totalBenefits,
-      this.menu.giveAwayMenuInfo(),
+      this.menu.giveAwayMenuInfo(totalPrice),
     );
     Console.print(`${expectedPayment.toLocaleString()}원`);
   },

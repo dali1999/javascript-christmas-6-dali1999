@@ -8,8 +8,8 @@ class App {
   }
 
   async run() {
-    await EventController.startPlannerAndGetInput();
-    EventController.plannerDetails();
+    await this.controller.startPlannerAndGetInput();
+    this.controller.plannerDetails();
   }
 }
 
