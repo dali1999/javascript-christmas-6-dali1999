@@ -1,5 +1,5 @@
 import InputView from '../view/InputView.js';
-import OutputView from '../view/OutputView.js';
+import OpeningAndOrderOutputView from '../view/OpeningAndOrderOutputView.js';
 import BenefitsOutputView from '../view/BenefitsOutputView.js';
 import Order from '../model/Order.js';
 import Payment from '../model/Payment.js';
@@ -17,7 +17,7 @@ class EventController {
   }
 
   async startPlannerAndGetInput() {
-    OutputView.printPlannerOpening();
+    OpeningAndOrderOutputView.printPlannerOpening();
     this.visitDate = await InputView.readVisitDate();
     this.orderInput = await InputView.readOrderMenu();
   }
@@ -30,9 +30,9 @@ class EventController {
   }
 
   orderDetails() {
-    OutputView.printBenefitOpening(this.visitDate);
-    OutputView.printOrderMenu(this.formattedOrderArr);
-    OutputView.printTotalPriceBeforeDiscount(this.totalPrice);
+    OpeningAndOrderOutputView.printBenefitOpening(this.visitDate);
+    OpeningAndOrderOutputView.printOrderMenu(this.formattedOrderArr);
+    OpeningAndOrderOutputView.printTotalPriceBeforeDiscount(this.totalPrice);
   }
 
   benefitsDetails() {

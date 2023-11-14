@@ -6,7 +6,6 @@ class Payment {
     this.menu = new Menu();
   }
 
-
   getPriceForMenu(menuName, quantity) {
     const menuItem = this.menu.findMenuByName(menuName);
     if (menuItem) {

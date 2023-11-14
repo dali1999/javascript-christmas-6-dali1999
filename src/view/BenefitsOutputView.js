@@ -1,12 +1,10 @@
 import { Console } from '@woowacourse/mission-utils';
 import PromptMessage from '../constant/PromptMessage.js';
-import Menu from '../model/Menu.js';
 import Event from '../model/Event.js';
 import Payment from '../model/Payment.js';
 import Badge from '../model/Badge.js';
 
 const BenefitsOutputView = {
-  menu: new Menu(),
   event: new Event(),
   payment: new Payment(),
 
@@ -78,11 +76,7 @@ const BenefitsOutputView = {
   printExpectedPayment(totalPrice, giveAwayInfo) {
     Console.print(PromptMessage.EXPECTED_PAYMENT_TITLE);
 
-    const expectedPayment = Payment.expectedPayment(
-      totalPrice,
-      this.event.totalBenefits,
-      giveAwayInfo,
-    );
+    const expectedPayment = Payment.expectedPayment(totalPrice, this.event.totalBenefits, giveAwayInfo);
     Console.print(`${expectedPayment.toLocaleString()}원`);
   },
 

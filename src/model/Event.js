@@ -1,4 +1,3 @@
-import { Console } from '@woowacourse/mission-utils';
 import Calender from './Calender.js';
 import Menu from './Menu.js';
 

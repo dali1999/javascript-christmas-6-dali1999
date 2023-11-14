@@ -26,8 +26,6 @@ class Menu {
       { name: '레드와인', price: 60000 },
       { name: '샴페인', price: 25000 },
     ]);
-
-    // this.totalPrice = 0;
   }
 
   findMenuByName(menuName) {
