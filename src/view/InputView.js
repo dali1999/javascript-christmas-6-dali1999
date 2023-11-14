@@ -3,9 +3,6 @@ import Validator from '../utils/Validator.js';
 import PromptMessage from '../constant/PromptMessage.js';
 
 const InputView = {
-  visitDate: 0,
-  orderMenu: [],
-
   async getReInput(promptMessage, validationFunction) {
     let validInput = false;
     let userInput;
@@ -22,18 +19,19 @@ const InputView = {
   },
 
   async readVisitDate() {
-    this.visitDate = await InputView.getReInput(PromptMessage.ENTER_VISIT_DATE, (input) => {
+    const visitDate = await InputView.getReInput(PromptMessage.ENTER_VISIT_DATE, (input) => {
       Validator.validateVisitDate(input);
       return true;
     });
-    this.visitDate = parseInt(this.visitDate, 10);
+    return parseInt(visitDate, 10);
   },
 
   async readOrderMenu() {
-    this.orderMenu = await InputView.getReInput(PromptMessage.ENTER_ORDER, (input) => {
+    const orderMenu = await InputView.getReInput(PromptMessage.ENTER_ORDER, (input) => {
       Validator.validateOrder(input);
       return true;
     });
+    return orderMenu;
   },
 };
 

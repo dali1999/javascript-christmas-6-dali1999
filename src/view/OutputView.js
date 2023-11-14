@@ -1,39 +1,36 @@
 import { Console } from '@woowacourse/mission-utils';
-import InputView from './InputView.js';
+import PromptMessage from '../constant/PromptMessage.js';
 import Menu from '../model/Menu.js';
 import Order from '../model/Order.js';
 import Event from '../model/Event.js';
 import Payment from '../model/Payment.js';
 import Badge from '../model/Badge.js';
-import PromptMessage from '../constant/PromptMessage.js';
 
 const OutputView = {
   menu: new Menu(),
   order: new Order(),
   event: new Event(),
-  formattedOrderArr: [],
 
   printPlannerOpening() {
     Console.print(PromptMessage.PLANNER_OPENING);
   },
 
-  printBenefitOpening() {
-    const date = InputView.visitDate;
-    Console.print(PromptMessage.BENEFITS_OPENING(date));
+  printBenefitOpening(visitDate) {
+    Console.print(PromptMessage.BENEFITS_OPENING(visitDate));
   },
 
-  printOrderMenu() {
+  printOrderMenu(order) {
     Console.print(PromptMessage.ORDER_MENU_TITLE);
 
-    this.order.formatOrder().forEach((item) => {
+    order.forEach((item) => {
       Console.print(`${item[0]} ${item[1]}개`);
     });
   },
 
-  printTotalPriceBeforeDiscount() {
+  printTotalPriceBeforeDiscount(order) {
     Console.print(PromptMessage.TOTAL_BEFORE_DISCOUNT_TITLE);
 
-    this.menu.totalPrice = this.menu.getTotalPriceForMenu(this.order.formattedOrderArr);
+    this.menu.totalPrice = this.menu.getTotalPriceForMenu(order);
     Console.print(`${this.menu.totalPrice.toLocaleString()}원`);
   },
 
@@ -52,23 +49,23 @@ const OutputView = {
     return null;
   },
 
-  printDdayDiscount() {
-    const dDayDiscountInfo = Event.checkDdayDiscountDay(InputView.visitDate);
+  printDdayDiscount(visitDate) {
+    const dDayDiscountInfo = Event.checkDdayDiscountDay(visitDate);
     return this.printDiscountMessage(PromptMessage.DDAY_DISCOUNT, dDayDiscountInfo);
   },
 
-  printWeekDayDiscount() {
-    const weekdayDiscountInfo = this.event.checkWeekdayDiscountDay(InputView.visitDate, this.order.formattedOrderArr);
+  printWeekDayDiscount(visitDate, order) {
+    const weekdayDiscountInfo = this.event.checkWeekdayDiscountDay(visitDate, order);
     return this.printDiscountMessage(PromptMessage.WEEKDAY_DISCOUNT, weekdayDiscountInfo);
   },
 
-  printWeekendDiscount() {
-    const weekendDiscountInfo = this.event.checkWeekendDiscountDay(InputView.visitDate, this.order.formattedOrderArr);
+  printWeekendDiscount(visitDate, order) {
+    const weekendDiscountInfo = this.event.checkWeekendDiscountDay(visitDate, order);
     return this.printDiscountMessage(PromptMessage.WEEKEND_DISCOUNT, weekendDiscountInfo);
   },
 
-  printSpecialDiscount() {
-    const specialDiscountInfo = this.event.checkSpecialDiscountDay(InputView.visitDate);
+  printSpecialDiscount(visitDate) {
+    const specialDiscountInfo = this.event.checkSpecialDiscountDay(visitDate);
     return this.printDiscountMessage(PromptMessage.SPECIAL_DISCOUNT, specialDiscountInfo);
   },
 
@@ -77,14 +74,14 @@ const OutputView = {
     return this.printDiscountMessage(PromptMessage.GIVEAWAY_EVENT_DISCOUNT, giveAwayEventInfo);
   },
 
-  printBenefitDetail() {
+  printBenefitDetail(visitDate, order) {
     Console.print(PromptMessage.BENEFIT_DETAIL_TITLE);
 
     const discountMessages = [
-      this.printDdayDiscount(),
-      this.printWeekDayDiscount(),
-      this.printWeekendDiscount(),
-      this.printSpecialDiscount(),
+      this.printDdayDiscount(visitDate),
+      this.printWeekDayDiscount(visitDate, order),
+      this.printWeekendDiscount(visitDate, order),
+      this.printSpecialDiscount(visitDate),
       this.printGiveawayEvent(),
     ];
     const hasDiscounts = discountMessages.some((message) => message !== null);
@@ -93,10 +90,10 @@ const OutputView = {
     }
   },
 
-  printTotalBenefits() {
+  printTotalBenefits(visitDate, order) {
     Console.print(PromptMessage.TOTAL_BENEFIT_TITLE);
 
-    this.event.totalBenefitsFromEvents(InputView.visitDate, this.order.formattedOrderArr, this.menu.giveAwayMenuInfo());
+    this.event.totalBenefitsFromEvents(visitDate, order, this.menu.giveAwayMenuInfo());
     const totalBenefitsMessage =
       this.event.totalBenefits !== 0 ? `-${this.event.totalBenefits.toLocaleString()}원` : PromptMessage.NULL_MESSAGE;
     Console.print(totalBenefitsMessage);

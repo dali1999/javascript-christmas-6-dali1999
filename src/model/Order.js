@@ -1,20 +1,20 @@
-import InputView from '../view/InputView.js';
-import Menu from './Menu.js';
+import { Console } from '@woowacourse/mission-utils';
 
 class Order {
   constructor() {
-    this.menu = new Menu();
-    this.formattedOrderArr = [];
+    // this.formattedOrderArr = [];
   }
 
-  formatOrder() {
-    const orderArr = InputView.orderMenu.split(',');
-    this.formattedOrderArr = orderArr.map((item) => {
+  // [ ['a', '1'], ['b', '2'] ]
+  static formatOrder(orderInput) {
+    const orderArr = orderInput.split(',');
+    const formattedOrderArr = orderArr.map((item) => {
       const [menu, num] = item.split('-');
       return [menu, parseInt(num, 10)];
     });
-    return this.formattedOrderArr;
+    Console.print(formattedOrderArr);
+    return formattedOrderArr;
   }
 }
-
+Order.formatOrder('a-1, b-2');
 export default Order;

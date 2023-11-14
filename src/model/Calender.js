@@ -1,4 +1,3 @@
-import { Console } from '@woowacourse/mission-utils';
 import CalenderConstants from '../constant/CalenderConstants.js';
 
 class Calender {
