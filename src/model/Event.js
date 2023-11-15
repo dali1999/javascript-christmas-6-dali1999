@@ -12,13 +12,11 @@ class Event {
     return false;
   }
 
-  // 크리스마스 디데이 할인
   static checkDdayDiscountDay(totalPrice, date) {
     if (Event.isOrderPriceMeetsCondition(totalPrice) && date >= 1 && date <= 25) return 1000 + 100 * (date - 1);
     return null;
   }
 
-  // 평일 할인: -${2023 * 디저트수}원
   checkWeekdayDiscountDay(totalPrice, date, orderMenu) {
     this.calender.storeWeekday();
     if (
@@ -32,7 +30,6 @@ class Event {
     return null;
   }
 
-  // 주말 할인: -${2023 * 메인수}원
   checkWeekendDiscountDay(totalPrice, date, orderMenu) {
     this.calender.storeWeekendday();
     if (
@@ -46,20 +43,17 @@ class Event {
     return null;
   }
 
-  // 특별 할인
   checkSpecialDiscountDay(totalPrice, date) {
     this.calender.storeSpecialDate();
     if (Event.isOrderPriceMeetsCondition(totalPrice) && this.calender.specialDate.includes(date)) return 1000;
     return null;
   }
 
-  // 증정 이벤트
   static checkGiveAwayEvent(isGiveAway) {
     if (isGiveAway) return 25000;
     return null;
   }
 
-  // 총 혜택
   totalBenefitsFromEvents(totalPrice, date, orderMenu, giveAwayInfo) {
     this.totalBenefits =
       Event.checkDdayDiscountDay(totalPrice, date) +
@@ -70,7 +64,5 @@ class Event {
     return this.totalBenefits;
   }
 }
-const a = new Event();
-a.checkWeekdayDiscountDay();
 
 export default Event;

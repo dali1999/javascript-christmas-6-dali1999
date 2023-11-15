@@ -6,7 +6,6 @@ import Badge from '../model/Badge.js';
 
 const BenefitsOutputView = {
   event: new Event(),
-  payment: new Payment(),
 
   printGiveAwayMenu(giveAwayInfo) {
     Console.print(PromptMessage.GIVEAWAY_MENU_TITLE);

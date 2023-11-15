@@ -11,8 +11,8 @@ class EventController {
     this.payment = new Payment();
     this.visitDate = 0;
     this.orderInput = '';
-    this.totalPrice = 0;
     this.formattedOrderArr = [];
+    this.totalPrice = 0;
     this.giveAwayInfo = false;
   }
 
