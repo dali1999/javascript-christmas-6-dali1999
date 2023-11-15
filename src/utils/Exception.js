@@ -4,7 +4,7 @@ import ErrorMessage from '../constant/ErrorMessage.js';
 
 const Exception = {
   menu: new Menu(),
-  
+
   isNumber(input) {
     if (isNaN(input)) {
       throw new Error(ErrorMessage.INVALID_DATE);
@@ -72,7 +72,5 @@ const Exception = {
     }
   },
 };
-
-Exception.isNumber("a");
 
 export default Exception;
